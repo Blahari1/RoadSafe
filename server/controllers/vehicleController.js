@@ -123,7 +123,7 @@ const updateVehicle = async (req, res) => {
     const vehicle = await Vehicle.findOneAndUpdate(
       { _id: id, userId: req.user.userId },
       { $set: updates },
-      { new: true, runValidators: true },
+      { returnDocument: "after", runValidators: true },
     );
 
     if (!vehicle) {

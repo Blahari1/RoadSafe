@@ -303,7 +303,7 @@ const cancelServiceRequest = async (req, res) => {
         $set: { status: "cancelled", cancelledAt: new Date() },
       },
       {
-        new: true,
+        returnDocument: "after",
         runValidators: true,
       },
     ).populate("vehicleId");

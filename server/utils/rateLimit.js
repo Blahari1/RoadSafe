@@ -20,7 +20,7 @@ const consume = async (key, { limit, windowMs, minIntervalMs = 0 }) => {
         lastHitAt: { $lte: new Date(now.getTime() - minIntervalMs) },
       },
       { $inc: { count: 1 }, $set: { lastHitAt: now } },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (updated) return { allowed: true };
@@ -45,7 +45,7 @@ const consume = async (key, { limit, windowMs, minIntervalMs = 0 }) => {
     const recycled = await RateLimit.findOneAndUpdate(
       { key, expiresAt: { $lte: now } },
       { $set: fresh },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (recycled) return { allowed: true };

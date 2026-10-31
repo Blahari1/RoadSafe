@@ -275,7 +275,7 @@ const updateMyMechanicProfile = async (req, res) => {
     const mechanic = await Mechanic.findOneAndUpdate(
       { userId: req.user.userId },
       { $set: updates },
-      { new: true, runValidators: true },
+      { returnDocument: "after", runValidators: true },
     );
 
     if (!mechanic) {
@@ -332,7 +332,7 @@ const updateMyAvailability = async (req, res) => {
     const mechanic = await Mechanic.findOneAndUpdate(
       filter,
       { $set: { isAvailable } },
-      { new: true, runValidators: true },
+      { returnDocument: "after", runValidators: true },
     );
 
     if (!mechanic) {

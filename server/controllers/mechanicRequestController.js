@@ -301,7 +301,7 @@ const acceptServiceRequest = async (req, res) => {
           acceptedAt: new Date(),
         },
       },
-      { new: true, runValidators: true },
+      { returnDocument: "after", runValidators: true },
     )
       .populate("customerId", "name phone")
       .populate("mechanicId", "name phone")
@@ -464,7 +464,7 @@ const updateServiceRequestStatus = async (req, res) => {
         status: transition.from,
       },
       { $set: { status, [transition.timestampField]: new Date() } },
-      { new: true, runValidators: true },
+      { returnDocument: "after", runValidators: true },
     )
       .populate("customerId", "name phone")
       .populate("vehicleId");

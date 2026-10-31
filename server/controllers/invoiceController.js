@@ -15,7 +15,7 @@ const nextInvoiceNumber = async () => {
   const counter = await Counter.findOneAndUpdate(
     { _id: `invoice-${year}` },
     { $inc: { seq: 1 } },
-    { new: true, upsert: true },
+    { returnDocument: "after", upsert: true },
   );
 
   return `RS-${year}-${String(counter.seq).padStart(6, "0")}`;

@@ -221,7 +221,7 @@ const verifyResetOtp = async (req, res) => {
         attempts: { $lt: MAX_OTP_ATTEMPTS },
       },
       { $inc: { attempts: 1 } },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (!record) return invalid();
@@ -247,7 +247,7 @@ const verifyResetOtp = async (req, res) => {
           resetTokenExpiresAt: new Date(now.getTime() + RESET_TOKEN_TTL_MS),
         },
       },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (!verified) return invalid();
@@ -315,7 +315,7 @@ const resetPassword = async (req, res) => {
         resetTokenExpiresAt: { $gt: now },
       },
       { $set: { usedAt: now } },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (!record) {
